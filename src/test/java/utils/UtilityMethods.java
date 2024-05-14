@@ -1,11 +1,8 @@
 package utils;
 
 import api.pet.objectMapping.Pet;
-import api.pet.objectMapping.PetCategory;
+import api.pet.objectMapping.Category;
 import api.pet.objectMapping.PetTag;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -16,12 +13,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
-
 public class UtilityMethods {
 
     public static Pet createPetAllFieldsTest(long petId, int categoryId, String categoryName, String petName, List<String> photoUrls, List<PetTag> tags, PetStatus petStatus, RequestSpecification requestSpec, String endpoint) {
-        PetCategory petCategory = new PetCategory(categoryId, categoryName);
+        Category petCategory = new Category(categoryId, categoryName);
 
         Pet pet = new Pet(petId, petCategory, petName, photoUrls, tags, petStatus);
         Response response = RestAssured.given()

@@ -23,7 +23,7 @@ import static utils.UtilityMethods.*;
 public class DeletePetTest {
     private static RequestSpecification requestSpec;
     public static final String PET_ENDPOINT = "/pet";
-    public static final double INVALID_PET_ID = 0.8;
+    public static final String INVALID_PET_ID = "abcd";
 
     @BeforeClass
     void setUp() {
@@ -60,39 +60,18 @@ public class DeletePetTest {
 
     }
 
-//    @Test
-//    void deleteCreatedPetInvalidPetIdTest() {
-//
-//        List<PetTag> listOfPetTags = new ArrayList<>();
-//
-//        createPetAllFieldsTest(0, 4, "Rat", "Missy", createListOfPhotos(MOUSE_PHOTO_URL), addPetTagToTheList(listOfPetTags, 1, "Tag1"), PetStatus.available, requestSpec, PET_ENDPOINT);
-//
-//        Response response = RestAssured.given()
-//                .spec(requestSpec)
-//                .log()
-//                .all()
-//                .basePath(PET_ENDPOINT + "/" + INVALID_PET_ID)
-//                .when()
-//                .delete();
-//
-//        response
-//                .then()
-//                .log()
-//                .all()
-//                .statusCode(HttpStatus.SC_BAD_REQUEST);
-//    }
-
     @Test
-    void deleteCreatedPetNotFoundPetIdTest() {
+    void deleteCreatedPetInvalidPetIdTest() {
+
         List<PetTag> listOfPetTags = new ArrayList<>();
 
-        Pet rat = createPetAllFieldsTest(0, 4, "Rat", "Missy", createListOfPhotos(MOUSE_PHOTO_URL), addPetTagToTheList(listOfPetTags, 1, "Tag1"), PetStatus.available, requestSpec, PET_ENDPOINT);
+        createPetAllFieldsTest(0, 4, "Rat", "Missy", createListOfPhotos(MOUSE_PHOTO_URL), addPetTagToTheList(listOfPetTags, 1, "Tag1"), PetStatus.available, requestSpec, PET_ENDPOINT);
 
         Response response = RestAssured.given()
                 .spec(requestSpec)
                 .log()
                 .all()
-                .basePath(PET_ENDPOINT + "/" + rat.getId())
+                .basePath(PET_ENDPOINT + "/" + INVALID_PET_ID)
                 .when()
                 .delete();
 
@@ -100,9 +79,16 @@ public class DeletePetTest {
                 .then()
                 .log()
                 .all()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_BAD_REQUEST);
+    }
 
-        Response response2 = RestAssured.given()
+    @Test
+    void deleteCreatedPetNotFoundPetIdTest() {
+        List<PetTag> listOfPetTags = new ArrayList<>();
+
+        Pet rat = createPetAllFieldsTest(0, 4, "Rat", "Missy", createListOfPhotos(MOUSE_PHOTO_URL), addPetTagToTheList(listOfPetTags, 1, "Tag1"), PetStatus.available, requestSpec, PET_ENDPOINT);
+
+        Response responseOfFirstDeleteRequest = RestAssured.given()
                 .spec(requestSpec)
                 .log()
                 .all()
@@ -110,7 +96,21 @@ public class DeletePetTest {
                 .when()
                 .delete();
 
-        response2
+        responseOfFirstDeleteRequest
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.SC_OK);
+
+        Response responseOfSecondDeleteRequest = RestAssured.given()
+                .spec(requestSpec)
+                .log()
+                .all()
+                .basePath(PET_ENDPOINT + "/" + rat.getId())
+                .when()
+                .delete();
+
+        responseOfSecondDeleteRequest
                 .then()
                 .log()
                 .all()

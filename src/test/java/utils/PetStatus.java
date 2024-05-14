@@ -1,5 +1,7 @@
 package utils;
 
 public enum PetStatus {
-    available
+    available,
+    pending,
+    sold
 }

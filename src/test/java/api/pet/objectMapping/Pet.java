@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import utils.PetStatus;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @Getter
@@ -16,9 +15,9 @@ import java.util.List;
 @NoArgsConstructor(onConstructor_ = {@JsonCreator})
 public class Pet {
     private long id;
-    private PetCategory petCategory;
+    private Category category;
     private String name;
     private List<String> photoUrls;
     private List<PetTag> tags;
-    private PetStatus petStatus;
+    private PetStatus status;
 }

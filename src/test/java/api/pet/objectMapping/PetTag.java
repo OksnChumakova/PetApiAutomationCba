@@ -9,6 +9,6 @@ import java.util.Objects;
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor(onConstructor_ = {@JsonCreator})
 @EqualsAndHashCode
 public class PetTag {
-    private int id;
+    private long id;
     private String name;
 }

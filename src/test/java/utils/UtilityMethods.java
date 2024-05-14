@@ -3,6 +3,7 @@ package utils;
 import api.pet.objectMapping.Pet;
 import api.pet.objectMapping.Category;
 import api.pet.objectMapping.PetTag;
+import com.aventstack.extentreports.ExtentTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -44,7 +45,36 @@ public class UtilityMethods {
         return petResponse;
     }
 
-    public static Pet createPetRequiredFieldsTest(String petName, List<String> photoUrls, RequestSpecification requestSpec, String endpoint) {
+    public static Pet createPetAllFieldsWithLoggingTest(long petId, int categoryId, String categoryName, String petName, List<String> photoUrls, List<PetTag> tags, PetStatus petStatus, RequestSpecification requestSpec, String endpoint, ExtentTest extentTest) {
+        Category petCategory = new Category(categoryId, categoryName);
+
+        Pet pet = new Pet(petId, petCategory, petName, photoUrls, tags, petStatus);
+        Response response = RestAssured.given()
+                .filter(new ExtentReportFilter(extentTest))
+                .spec(requestSpec)
+                .log()
+                .all()
+                .contentType(ContentType.JSON)
+                .body(pet)
+                .when()
+                .post(endpoint);
+
+        response
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.SC_OK);
+
+        Pet petResponse = response.as(Pet.class);
+
+        assert (petResponse.getName()).equals(pet.getName());
+        assert (petResponse.getPhotoUrls()).equals(pet.getPhotoUrls());
+        assert (petResponse.getTags()).equals(pet.getTags());
+        Assert.assertNotEquals(petResponse.getId(), 0, "ID should not be zero");
+        return petResponse;
+    }
+
+    public static Pet createPetRequiredFieldsTest(String petName, List<String> photoUrls, RequestSpecification requestSpec, String endpoint, ExtentTest extentTest) {
 
         Pet pet = Pet.builder()
                 .name(petName)
@@ -52,6 +82,7 @@ public class UtilityMethods {
                 .build();
 
         Response response = RestAssured.given()
+                .filter(new ExtentReportFilter(extentTest))
                 .spec(requestSpec)
                 .log()
                 .all()

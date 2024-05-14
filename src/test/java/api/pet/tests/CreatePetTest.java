@@ -81,23 +81,25 @@ public class CreatePetTest {
         ExtentTest extentTest = extent.createTest("Create pet with All fields - 200 is expected");
 
         List<PetTag> listOfPetTags = new ArrayList<>();
-        createPetAllFieldsTest(0, 0, "Dog", "Bobby", createListOfPhotos(DOG_PHOTO_URL), addPetTagToTheList(listOfPetTags, 0, "Tag0"), PetStatus.available, requestSpec, PET_ENDPOINT);
+        createPetAllFieldsWithLoggingTest(0, 0, "Dog", "Bobby", createListOfPhotos(DOG_PHOTO_URL), addPetTagToTheList(listOfPetTags, 0, "Tag0"), PetStatus.available, requestSpec, PET_ENDPOINT, extentTest);
     }
 
     @Test
     void createPetWithRequiredFieldsTest() {
-
-        createPetRequiredFieldsTest("Bobby", createListOfPhotos(DOG_PHOTO_URL), requestSpec, PET_ENDPOINT);
+        ExtentTest extentTest = extent.createTest("Create pet with Required fields - 200 is expected");
+        createPetRequiredFieldsTest("Bobby", createListOfPhotos(DOG_PHOTO_URL), requestSpec, PET_ENDPOINT, extentTest);
     }
 
     @Test
     void uploadImageToPetTest() {
+        ExtentTest extentTest = extent.createTest("Upload image to created pet - 200 is expected");
 
         List<PetTag> listOfPetTags = new ArrayList<>();
 
         Pet cat = createPetAllFieldsTest(0, 1, "Cat", "Lizzy", createListOfPhotos(CAT_PHOTO_URL), addPetTagToTheList(listOfPetTags, 0, "Tag0"), PetStatus.available, requestSpec, PET_ENDPOINT);
 
         RestAssured.given()
+                .filter(new ExtentReportFilter(extentTest))
                 .spec(requestSpec)
                 .log()
                 .all()

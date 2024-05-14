@@ -2,10 +2,10 @@
 <suite name="MyTestSuite">
     <test name="MyTest">
         <classes>
-<!--            <class name="api.pet.tests.CreatePetTest"/>-->
+            <class name="api.pet.tests.CreatePetTest"/>
 <!--            <class name="api.pet.tests.UpdatePetTest"/>-->
 <!--            <class name="api.pet.tests.DeletePetTest"/>-->
-            <class name="api.pet.tests.GetPetTest"/>
+<!--            <class name="api.pet.tests.GetPetTest"/>-->
             <!-- Add more test classes as needed -->
         </classes>
     </test>

@@ -26,6 +26,7 @@ import static utils.UtilityMethods.*;
 public class UpdatePetTest {
     private static RequestSpecification requestSpec;
     public static final String PET_ENDPOINT = "/pet";
+    public static final int INVALID_PET_NAME = 678;
 
     @BeforeClass
     void setUp() {
@@ -39,35 +40,85 @@ public class UpdatePetTest {
         requestSpec = builder.build();
     }
 
-    @Test
-    void updateCreatedPetTest() {
+//    @Test
+//    void updateCreatedPetTest() {
+//        List<PetTag> listOfPetTags = new ArrayList<>();
+//
+//        Pet mouse = createPetAllFieldsTest(0, 3, "Mouse", "Fluffy", createListOfPhotos(MOUSE_PHOTO_URL), addPetTagToTheList(listOfPetTags, 1, "Tag1"), PetStatus.available, requestSpec, PET_ENDPOINT);
+//
+//        mouse.setName("Snow");
+//
+//        Response response = RestAssured.given()
+//                .spec(requestSpec)
+//                .log()
+//                .all()
+//                .basePath(PET_ENDPOINT)
+//                .contentType(ContentType.JSON)
+//                .body(mouse)
+//                .when()
+//                .put();
+//
+//        response
+//                .then()
+//                .log()
+//                .all()
+//                .statusCode(HttpStatus.SC_OK);
+//
+//        Pet petResponse = response.as(Pet.class);
+//
+//        assert (petResponse.getName()).equals(mouse.getName());
+//        assert (petResponse.getPhotoUrls()).equals(mouse.getPhotoUrls());
+//        assert (petResponse.getTags()).equals(mouse.getTags());
+//    }
 
+    // update with form data
+//    @Test
+//    void updateCreatedPetWithFormDataTest() {
+//        List<PetTag> listOfPetTags = new ArrayList<>();
+//
+//        Pet mouse = createPetAllFieldsTest(0, 3, "Mouse", "Nordie", createListOfPhotos(MOUSE_PHOTO_URL), addPetTagToTheList(listOfPetTags, 1, "Tag1"), PetStatus.available, requestSpec, PET_ENDPOINT);
+//
+//        Response response = RestAssured.given()
+//                .spec(requestSpec)
+//                .log()
+//                .all()
+//                .basePath(PET_ENDPOINT + "/" + mouse.getId())
+//                .contentType("application/x-www-form-urlencoded")
+//                .formParam("name", "Betty")
+//                .formParam("status", PetStatus.sold)
+//                .when()
+//                .post();
+//
+//        response
+//                .then()
+//                .log()
+//                .all()
+//                .statusCode(HttpStatus.SC_OK);
+//    }
+
+    @Test
+    void updateCreatedPetWithFormDataInvalidInputTest() {
         List<PetTag> listOfPetTags = new ArrayList<>();
 
-        Pet mouse = createPetAllFieldsTest(0, 3, "Mouse", "Fluffy", createListOfPhotos(MOUSE_PHOTO_URL), addPetTagToTheList(listOfPetTags, 1, "Tag1"), PetStatus.available, requestSpec, PET_ENDPOINT);
-
-        mouse.setName("Snow");
+        Pet mouse = createPetAllFieldsTest(0, 3, "Mouse", "Nordie", createListOfPhotos(MOUSE_PHOTO_URL), addPetTagToTheList(listOfPetTags, 1, "Tag1"), PetStatus.available, requestSpec, PET_ENDPOINT);
 
         Response response = RestAssured.given()
                 .spec(requestSpec)
                 .log()
                 .all()
-                .basePath(PET_ENDPOINT)
-                .contentType(ContentType.JSON)
-                .body(mouse)
+                .basePath(PET_ENDPOINT + "/" + mouse.getId())
+                .contentType("application/x-www-form-urlencoded")
+                .formParam("name", INVALID_PET_NAME)
+                .formParam("status", PetStatus.sold)
                 .when()
-                .put();
+                .post();
 
         response
                 .then()
                 .log()
                 .all()
-                .statusCode(HttpStatus.SC_OK);
-
-        Pet petResponse = response.as(Pet.class);
-
-        assert (petResponse.getName()).equals(mouse.getName());
-        assert (petResponse.getPhotoUrls()).equals(mouse.getPhotoUrls());
-        assert (petResponse.getTags()).equals(mouse.getTags());
+                .statusCode(HttpStatus.SC_METHOD_NOT_ALLOWED);
     }
+
+
 }

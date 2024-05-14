@@ -2,22 +2,26 @@ package api.pet.tests;
 
 import api.pet.objectMapping.Pet;
 import api.pet.objectMapping.PetTag;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import utils.ConfigReader;
+import utils.ExtentReportFilter;
 import utils.PetStatus;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static utils.DataHelper.*;
 import static utils.UtilityMethods.*;
 
@@ -25,6 +29,21 @@ import static utils.UtilityMethods.*;
 public class CreatePetTest {
     private static RequestSpecification requestSpec;
     public static final String PET_ENDPOINT = "/pet";
+
+    private ExtentReports extent;
+
+    @BeforeSuite
+    public void reporterSetUp() {
+
+        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("test-output/ExtentReport.html");
+        extent = new ExtentReports();
+        extent.attachReporter(htmlReporter);
+    }
+
+    @AfterSuite
+    public void tearDown() {
+        extent.flush();
+    }
 
     @BeforeClass
     void setUp() {
@@ -41,7 +60,10 @@ public class CreatePetTest {
     @Test
     void createPetWithNoBodyTest() {
 
+        ExtentTest extentTest = extent.createTest("Create pet with no body - 405 is expected");
+
         RestAssured.given()
+                .filter(new ExtentReportFilter(extentTest))
                 .spec(requestSpec)
                 .log()
                 .all()
@@ -55,12 +77,17 @@ public class CreatePetTest {
     }
 
     @Test
-    void createPetTest() {
+    void createPetWithAllFieldsTest() {
+        ExtentTest extentTest = extent.createTest("Create pet with All fields - 200 is expected");
+
         List<PetTag> listOfPetTags = new ArrayList<>();
-
         createPetAllFieldsTest(0, 0, "Dog", "Bobby", createListOfPhotos(DOG_PHOTO_URL), addPetTagToTheList(listOfPetTags, 0, "Tag0"), PetStatus.available, requestSpec, PET_ENDPOINT);
+    }
 
+    @Test
+    void createPetWithRequiredFieldsTest() {
 
+        createPetRequiredFieldsTest("Bobby", createListOfPhotos(DOG_PHOTO_URL), requestSpec, PET_ENDPOINT);
     }
 
     @Test

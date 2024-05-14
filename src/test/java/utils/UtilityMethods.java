@@ -8,6 +8,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
+import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,10 +37,40 @@ public class UtilityMethods {
 
         Pet petResponse = response.as(Pet.class);
 
-        assert(petResponse.getName()).equals(pet.getName());
-        assert(petResponse.getPhotoUrls()).equals(pet.getPhotoUrls());
-        assert(petResponse.getTags()).equals(pet.getTags());
-//        assert(petResponse.getId()).eq
+        assert (petResponse.getName()).equals(pet.getName());
+        assert (petResponse.getPhotoUrls()).equals(pet.getPhotoUrls());
+        assert (petResponse.getTags()).equals(pet.getTags());
+        Assert.assertNotEquals(petResponse.getId(), 0, "ID should not be zero");
+        return petResponse;
+    }
+
+    public static Pet createPetRequiredFieldsTest(String petName, List<String> photoUrls, RequestSpecification requestSpec, String endpoint) {
+
+        Pet pet = Pet.builder()
+                .name(petName)
+                .photoUrls(photoUrls)
+                .build();
+
+        Response response = RestAssured.given()
+                .spec(requestSpec)
+                .log()
+                .all()
+                .contentType(ContentType.JSON)
+                .body(pet)
+                .when()
+                .post(endpoint);
+
+        response
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.SC_OK);
+
+        Pet petResponse = response.as(Pet.class);
+
+        assert (petResponse.getName()).equals(pet.getName());
+        assert (petResponse.getPhotoUrls()).equals(pet.getPhotoUrls());
+        Assert.assertNotEquals(petResponse.getId(), 0, "ID should not be zero");
         return petResponse;
     }
 

@@ -120,7 +120,7 @@ public class GetPetTest {
                 .statusCode(HttpStatus.SC_BAD_REQUEST);
     }
 
-//     get pet by id
+    //     get pet by id
     @Test
     void getPetsByIdTest() {
         List<PetTag> listOfPetTags = new ArrayList<>();
@@ -144,11 +144,11 @@ public class GetPetTest {
         Pet petResponse = response.as(Pet.class);
 
         Assert.assertEquals(Long.valueOf(petResponse.getId()), tiger.getId());
-        assert(petResponse.getName()).equals(tiger.getName());
-        assert(petResponse.getCategory().equals(tiger.getCategory()));
-        assert(petResponse.getPhotoUrls()).equals(tiger.getPhotoUrls());
-        assert(petResponse.getTags()).equals(tiger.getTags());
-        assert(petResponse.getStatus().equals(tiger.getStatus()));
+        assert (petResponse.getName()).equals(tiger.getName());
+        assert (petResponse.getCategory().equals(tiger.getCategory()));
+        assert (petResponse.getPhotoUrls()).equals(tiger.getPhotoUrls());
+        assert (petResponse.getTags()).equals(tiger.getTags());
+        assert (petResponse.getStatus().equals(tiger.getStatus()));
     }
 
     @Test

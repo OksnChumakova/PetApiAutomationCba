@@ -8,25 +8,9 @@ import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
 public class DeletePet {
-    public static void deleteCreatedPetWithLogging(RequestSpecification requestSpec, String endpoint, Pet pet) {
-        Response response = RestAssured.given()
-                .filter(new AllureRestAssured())
-                .spec(requestSpec)
-                .log()
-                .all()
-                .basePath(endpoint + "/" + pet.getId())
-                .when()
-                .delete();
-
-        response
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.SC_OK);
-    }
-
     public static void deleteCreatedPet(RequestSpecification requestSpec, String endpoint, Pet pet) {
         Response response = RestAssured.given()
+                .filter(new AllureRestAssured())
                 .spec(requestSpec)
                 .log()
                 .all()

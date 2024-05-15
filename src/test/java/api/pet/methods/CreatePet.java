@@ -18,35 +18,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class CreatePet {
+
     public static Pet createPetAllFields(long petId, int categoryId, String categoryName, String petName, List<String> photoUrls, List<PetTag> tags, PetStatus petStatus, RequestSpecification requestSpec, String endpoint) {
-        Category petCategory = new Category(categoryId, categoryName);
-
-        Pet pet = new Pet(petId, petCategory, petName, photoUrls, tags, petStatus);
-        Response response = RestAssured.given()
-                .spec(requestSpec)
-                .log()
-                .all()
-                .contentType(ContentType.JSON)
-                .body(pet)
-                .when()
-                .post(endpoint);
-
-        response
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.SC_OK);
-
-        Pet petResponse = response.as(Pet.class);
-
-        assert (petResponse.getName()).equals(pet.getName());
-        assert (petResponse.getPhotoUrls()).equals(pet.getPhotoUrls());
-        assert (petResponse.getTags()).equals(pet.getTags());
-        Assert.assertNotEquals(petResponse.getId(), 0, "ID should not be zero");
-        return petResponse;
-    }
-
-    public static void createPetAllFieldsWithLogging(long petId, int categoryId, String categoryName, String petName, List<String> photoUrls, List<PetTag> tags, PetStatus petStatus, RequestSpecification requestSpec, String endpoint) {
         Category petCategory = new Category(categoryId, categoryName);
 
         Pet pet = new Pet(petId, petCategory, petName, photoUrls, tags, petStatus);
@@ -72,6 +45,8 @@ public class CreatePet {
         assert (petResponse.getPhotoUrls()).equals(pet.getPhotoUrls());
         assert (petResponse.getTags()).equals(pet.getTags());
         Assert.assertNotEquals(petResponse.getId(), 0, "ID should not be zero");
+
+        return petResponse;
     }
 
     public static void createPetRequiredFields(String petName, List<String> photoUrls, RequestSpecification requestSpec, String endpoint) {

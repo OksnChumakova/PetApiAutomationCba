@@ -15,7 +15,7 @@ jobs:
       - name: Run tests
         env:
           apiKey: ${{ secrets.APIKEY }}
-        run: ./mvn clean test
+        run: mvn clean test
 
       - name: Load test report history
         uses: actions/checkout@v3

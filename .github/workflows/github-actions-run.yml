@@ -1,5 +1,5 @@
 name: Run tests and publish report
-on: [workflow_dispatch]
+on: [workflow_dispatch, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest

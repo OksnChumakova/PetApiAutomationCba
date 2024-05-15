@@ -42,3 +42,8 @@ Expected status code <400> but was <200> - When providing invalid pet `status` (
 
 * [ERROR]   UpdatePetTest.updateCreatedPetWithFormDataInvalidInputTest:60 1 expectation failed.
 Expected status code <405> but was <200> - When providing invalid value for `status` field in the form data (in documentation it is stated that expected type of name parameter is `string`) as `invalid_status` - the response code is 200 while I expect 405 (according to swagger schema).
+
+## Github Actions
+
+Github Actions configured to run PetApiAutomation CI pipeline. https://github.com/OksnChumakova/PetApiAutomationCba/actions/workflows/github-actions-run.yml
+At current state, CI pipeline checks out branch, builds and runs tests. TODO: publish allure reports. 

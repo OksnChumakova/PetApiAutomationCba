@@ -15,7 +15,6 @@ public class ConfigReader {
             properties.load(input);
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle file not found or other exceptions
         }
     }
 

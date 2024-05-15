@@ -14,25 +14,28 @@ In order to utilise this project you need to have the following installed locall
 
 ## Usage
 
-To run all tests, navigate to `PetApiAutomationCba` directory and run:
+Set ApiKey through environment variable
+`$env:apiKey="<YOUR_API_KEY>"`
+
+To run all tests run:
 
 `mvn clean test`
 
 ## Reporting
 
-To generate Allure report after each run, navigate to `PetApiAutomationCba` directory and run:
+To generate Allure report after each run:
 
-`allure serve`
+`allure generate -c`
 
 ## Failed tests
 
 This is the list of the failed test cases with the explanation:
 
 * [ERROR]   DeletePetTest.deleteWithInvalidPetIdTest:46 1 expectation failed.
-Expected status code <400> but was <404> - When providing invalid pet id (in documentation it is stated that expected type is `integer($int64`) as `null` - the response code is 404 while I expect 400.
+Expected status code <400> but was <404> - When providing invalid pet id (in documentation it is stated that expected type is `integer $int64`) as `null` - the response code is 404 while I expect 400.
 
 * [ERROR]   GetPetTest.getPetsByInvalidPetIdTest:65 1 expectation failed.
-Expected status code <400> but was <404> - When providing invalid pet id (in documentation it is stated that expected type is `integer($int64`) as `null` - the response code is 404 while I expect 400.
+Expected status code <400> but was <404> - When providing invalid pet id (in documentation it is stated that expected type is `integer $int64`) as `null` - the response code is 404 while I expect 400.
 
 * [ERROR]   GetPetTest.getPetsByInvalidStatusTest:51 1 expectation failed.
 Expected status code <400> but was <200> - When providing invalid pet `status` (in documentation it is stated that only 3 values are possible - `available`, `pending`, `sold`) as `invalid_status` - the response code is 200 while I expect 400 (according to swagger schema).

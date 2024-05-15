@@ -1,0 +1,30 @@
+name: Run tests and publish report
+on: [workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 21
+
+      - name: Run tests
+        env:
+          apiKey: ${{ secrets.APIKEY }}
+        run: ./mvn clean test
+
+      - name: Load test report history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          allure_history: allure-history
+          allure_results: build/allure-results

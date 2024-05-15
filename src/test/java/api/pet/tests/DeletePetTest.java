@@ -38,7 +38,7 @@ public class DeletePetTest {
         List<PetTag> listOfPetTags = new ArrayList<>();
         Pet rat = createPetAllFields(0, 4, "Rat", "Missy", createListOfPhotos(MOUSE_PHOTO_URL), addPetTagToTheList(listOfPetTags, 1, "Tag1"), PetStatus.available, requestSpec, PET_ENDPOINT);
 
-        deleteCreatedPetWithLogging(requestSpec, PET_ENDPOINT, rat);
+        deleteCreatedPet(requestSpec, PET_ENDPOINT, rat);
     }
 
     @Test

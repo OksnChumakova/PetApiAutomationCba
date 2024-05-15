@@ -40,7 +40,7 @@ public class CreatePetTest {
     @Test
     void createPetWithAllFieldsTest() {
         List<PetTag> listOfPetTags = new ArrayList<>();
-        createPetAllFieldsWithLogging(0, 0, "Dog", "Bobby", createListOfPhotos(DOG_PHOTO_URL), addPetTagToTheList(listOfPetTags, 0, "Tag0"), PetStatus.available, requestSpec, PET_ENDPOINT);
+        createPetAllFields(0, 0, "Dog", "Bobby", createListOfPhotos(DOG_PHOTO_URL), addPetTagToTheList(listOfPetTags, 0, "Tag0"), PetStatus.available, requestSpec, PET_ENDPOINT);
     }
 
     @Test

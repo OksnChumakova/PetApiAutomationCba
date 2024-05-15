@@ -46,4 +46,6 @@ Expected status code <405> but was <200> - When providing invalid value for `sta
 ## Github Actions
 
 Github Actions configured to run PetApiAutomation CI pipeline. https://github.com/OksnChumakova/PetApiAutomationCba/actions/workflows/github-actions-run.yml
-At current state, CI pipeline checks out branch, builds and runs tests. TODO: publish allure report. 
+At current state, CI pipeline checks out branch, builds and runs tests.
+ApiKey is securely stored in Github Environment Secrets and passed to workflow step as environment variable.
+TODO: publish allure report. 

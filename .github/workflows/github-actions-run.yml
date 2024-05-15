@@ -28,3 +28,9 @@ jobs:
         with:
           allure_history: allure-history
           allure_results: build/allure-results
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: homework_pre
+          path: build/allure-results

@@ -12,36 +12,22 @@ jobs:
           distribution: corretto
           java-version: 21
 
-      - name: Prepare Allure history # Step to prepare Allure history directory
-        run: |
-          cd ..
-          mkdir -p ${{ vars.ALLURE_RESULTS_PATH }}
-
       - name: Run tests
         env:
           apiKey: ${{ secrets.APIKEY }}
         run: mvn clean test
 
-      - name: Get Allure history # Step to retrieve Allure history
-        uses: actions/checkout@v3
-        if: always() # Execute even if previous steps fail
-        continue-on-error: true # Continue execution even if the step fails
+      - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@v1.9
+        if: always()
         with:
-          ref: feature/OksanaChumakova-CBATest # Specify the branch to retrieve Allure history from
-          path: feature/OksanaChumakova-CBATest # Set the destination path for Allure history
+          allure_results: allure-results
+          allure_history: allure-history
 
-      - name: Allure report action # Step to generate Allure report
-        uses: simple-elf/allure-report-action@master
-        if: always() # Execute even if previous steps fail
+      - name: Publish Allure Report
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3.9.3
         with:
-          allure_results: ${{ vars.ALLURE_RESULTS_PATH }} # Specify the directory containing Allure results
-          allure_history: allure-history # Specify the directory to store Allure history
-          keep_reports: 5 # Specify the number of previous reports to keep
-
-      - name: Deploy Allure report to GitHub Pages # Step to deploy Allure report to GitHub Pages
-        if: always() # Execute even if previous steps fail
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # Provide the GitHub token for authentication
-          publish_branch: feature/OksanaChumakova-CBATest # Specify the branch to publish the report to
-          publish_dir: allure-history # Specify the directory containing the report
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure_results

@@ -9,6 +9,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
+          cache: 'maven'
           distribution: corretto
           java-version: 21
 
@@ -16,6 +17,14 @@ jobs:
         env:
           apiKey: ${{ secrets.APIKEY }}
         run: mvn clean test
+
+      - name: Setup Allure History
+        uses: actions/checkout@v4.1.1
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
 
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@v1.9

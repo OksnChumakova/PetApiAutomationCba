@@ -28,7 +28,7 @@ public class GetPetTest extends BaseTest{
 
     @Test
     void getPetsByInvalidStatusTest() {
-        getPetsByInvalidStatus(requestSpec, PET_ENDPOINT, INVALID_STATUS);
+        getPetsByInvalidStatus(requestSpec, PET_ENDPOINT);
     }
 
     @Test

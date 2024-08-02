@@ -11,6 +11,8 @@ import org.testng.Assert;
 
 import java.util.List;
 
+import static utils.Constants.INVALID_STATUS;
+
 public class GetPet {
     public static void getPetsByStatusOneByOne(RequestSpecification requestSpec, String endpoint) {
         for (PetStatus status : PetStatus.values()) {
@@ -73,14 +75,14 @@ public class GetPet {
         }
     }
 
-    public static void getPetsByInvalidStatus(RequestSpecification requestSpec, String endpoint, String invalidStatus) {
+    public static void getPetsByInvalidStatus(RequestSpecification requestSpec, String endpoint) {
         Response response = RestAssured.given()
                 .filter(new AllureRestAssured())
                 .spec(requestSpec)
                 .log()
                 .all()
                 .basePath(endpoint + "/findByStatus")
-                .queryParam("status", invalidStatus)
+                .queryParam("status", INVALID_STATUS)
                 .when()
                 .get();
 

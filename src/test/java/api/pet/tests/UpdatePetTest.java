@@ -2,35 +2,18 @@ package api.pet.tests;
 
 import api.pet.objectMapping.Pet;
 import api.pet.objectMapping.PetTag;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.specification.RequestSpecification;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import utils.ConfigReader;
-import utils.PetStatus;
+import api.pet.endpoints.PetStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static api.pet.methods.CreatePet.*;
-import static api.pet.methods.UpdatePet.*;
+import static api.pet.endpoints.CreatePet.*;
+import static api.pet.endpoints.UpdatePet.*;
+import static utils.Constants.PET_ENDPOINT;
 import static utils.DataHelper.MOUSE_PHOTO_URL;
 
-public class UpdatePetTest {
-    private static RequestSpecification requestSpec;
-    public static final String PET_ENDPOINT = "/pet";
-
-    @BeforeClass
-    void setUp() {
-        ConfigReader configReader = new ConfigReader("src/test/resources/config.properties");
-        String baseURL = configReader.getProperty("api.baseURL");
-
-        RequestSpecBuilder builder = new RequestSpecBuilder();
-        builder.setBaseUri(baseURL);
-        builder.addHeader("api-key", System.getenv("apiKey"));
-
-        requestSpec = builder.build();
-    }
+public class UpdatePetTest extends BaseTest {
 
     @Test
     void updatePetTest() {
@@ -43,7 +26,6 @@ public class UpdatePetTest {
         updateCreatedPet(requestSpec, PET_ENDPOINT, mouse);
     }
 
-    // update with form data
     @Test
     void updateWithFormDataTest() {
         List<PetTag> listOfPetTags = new ArrayList<>();

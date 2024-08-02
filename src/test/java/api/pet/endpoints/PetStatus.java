@@ -1,4 +1,4 @@
-package utils;
+package api.pet.endpoints;
 
 public enum PetStatus {
     available,

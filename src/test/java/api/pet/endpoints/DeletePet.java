@@ -1,4 +1,4 @@
-package api.pet.methods;
+package api.pet.endpoints;
 
 import api.pet.objectMapping.Pet;
 import io.qameta.allure.restassured.AllureRestAssured;

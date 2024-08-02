@@ -2,7 +2,7 @@ package api.pet.objectMapping;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.*;
-import utils.PetStatus;
+import api.pet.endpoints.PetStatus;
 
 import java.util.List;
 

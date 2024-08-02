@@ -1,4 +1,4 @@
-package api.pet.methods;
+package api.pet.endpoints;
 
 import api.pet.objectMapping.Pet;
 
@@ -8,7 +8,6 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
-import utils.PetStatus;
 
 import java.util.List;
 

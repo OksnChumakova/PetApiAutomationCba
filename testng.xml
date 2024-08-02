@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Regression API tests for Petstore">
+<suite name="Regression API tests for Petstore" parallel="classes" thread-count="4">
     <test name="PET endpoint">
         <classes>
             <class name="api.pet.tests.CreatePetTest"/>

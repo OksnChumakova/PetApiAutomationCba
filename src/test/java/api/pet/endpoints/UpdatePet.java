@@ -1,4 +1,4 @@
-package api.pet.methods;
+package api.pet.endpoints;
 
 import api.pet.objectMapping.Pet;
 import io.qameta.allure.restassured.AllureRestAssured;
@@ -7,7 +7,6 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
-import utils.PetStatus;
 
 public class UpdatePet {
     public static void updateCreatedPet(RequestSpecification requestSpec, String endpoint, Pet pet) {

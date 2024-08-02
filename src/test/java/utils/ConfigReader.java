@@ -7,14 +7,14 @@ import java.util.Properties;
 
 public class ConfigReader {
 
-    private Properties properties;
+    private final Properties properties;
 
     public ConfigReader(String filePath) {
         properties = new Properties();
         try (InputStream input = new FileInputStream(filePath)) {
             properties.load(input);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.printf("Properties file not found in the following path - %s", filePath);
         }
     }
 

@@ -17,7 +17,7 @@ public class BaseTest {
 
         RequestSpecBuilder builder = new RequestSpecBuilder();
         builder.setBaseUri(baseURL);
-        builder.addHeader("api-key", System.getenv("apiKey"));
+        builder.addHeader("api-key", System.getProperty("apiKey"));
 
         requestSpec = builder.build();
     }

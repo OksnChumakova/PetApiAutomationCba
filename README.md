@@ -14,12 +14,7 @@ In order to utilise this project you need to have the following installed locall
 
 ## Usage
 
-Set ApiKey through environment variable
-`$env:apiKey="<YOUR_API_KEY>"`
-
-To run all tests run:
-
-`mvn clean test`
+`mvn clean test -DapiKey=special-key`
 
 ## Reporting
 

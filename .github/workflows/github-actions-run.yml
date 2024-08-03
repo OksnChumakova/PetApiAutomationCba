@@ -14,9 +14,7 @@ jobs:
           java-version: 21
 
       - name: Run tests
-        env:
-          apiKey: ${{ secrets.APIKEY }}
-        run: mvn clean test
+        run: mvn clean test -DapiKey=${{ secrets.APIKEY }}
 
       - name: Setup Allure History
         uses: actions/checkout@v4.1.1
